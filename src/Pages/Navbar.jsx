@@ -1,12 +1,16 @@
 import React from 'react';
 import logo from '../assets/logo.jpg'
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
 
     const link=<>
-    <li><a>Item 1</a></li>
+   <NavLink to='/'> <li><a>Home</a></li></NavLink>
+   <NavLink to='/marathons'> <li><a>Marathons</a></li></NavLink>
+   <NavLink to='/login'> <li><a>Login</a></li></NavLink>
+   <NavLink to='/register'> <li><a>Register</a></li></NavLink>
      
-     <li><a>Item 3</a></li>
+    
     
     </>
     return (
@@ -31,6 +35,8 @@ const Navbar = () => {
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
       {link}
+
+      
       </ul>
     </div>
     <a className="btn btn-ghost text-xl"><img className='h-10 w-10 rounded-full' src={logo}></img></a>
