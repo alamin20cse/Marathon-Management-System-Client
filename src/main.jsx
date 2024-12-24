@@ -13,6 +13,7 @@ import Register from './Pages/Register.jsx';
 import Marathons from './Component/Marathons.jsx';
 import ErrorPage from './Pages/ErrorPage.jsx';
 import AuthProvider from './Component/AuthProvider.jsx';
+import Dashboard from './Pages/Dashboard.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,7 +34,20 @@ const router = createBrowserRouter([
       {
         path:'/marathons',
         element:<Marathons></Marathons>
+      },
+      {
+        path:'/dashboard',
+        element:<Dashboard></Dashboard>
       }
+
+
+
+
+
+
+
+
+
     ]
   },
   {
