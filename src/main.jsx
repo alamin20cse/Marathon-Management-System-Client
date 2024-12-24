@@ -12,6 +12,7 @@ import Login from './Pages/Login.jsx';
 import Register from './Pages/Register.jsx';
 import Marathons from './Component/Marathons.jsx';
 import ErrorPage from './Pages/ErrorPage.jsx';
+import AuthProvider from './Component/AuthProvider.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,6 +44,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-  <RouterProvider router={router} />
+ <AuthProvider>
+ <RouterProvider router={router} />
+ </AuthProvider>
   </StrictMode>,
 )

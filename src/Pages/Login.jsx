@@ -1,17 +1,57 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { AuthContex } from '../Component/AuthProvider';
 
 const Login = () => {
 
 
-    
+  const navigate=useNavigate();
+  const location=useLocation();
+
+
+  const {userLogin,setUser,handelGooglSignIn}=useContext(AuthContex);
+
     const handleLogin=e=>{
         e.preventDefault();
         const email=e.target.email.value;
         const password=e.target.password.value;
-        console.log(email,password);
+        // console.log(email,password);
+
+
+        userLogin(email,password)
+        .then(result=>{
+
+          const user = result.user;
+          setUser(user); 
+
+          // console.log(user);
+          
+          Swal.fire("Login succes fully");
+          navigate(location?.state?location.state:'/');
+        })
+        .catch(error=>{
+         Swal.fire(error.message);
+
+        })
     }
+
+
+
+    const handleGoogleLogin = () => {
+     
+      handelGooglSignIn()
+        .then(() => {
+          navigate(location?.state?location.state:'/');
+          Swal.fire('Succesfully Login')
+        })
+        .catch(error => {
+         Swal.fire(error.message); // Error notification
+        });
+    };
+
+  
+
 
 
 
@@ -63,7 +103,7 @@ const Login = () => {
                <button className="btn btn-primary">Login</button>
              </div>
            </form>
-           <button  className='btn btn-primary'>Login with Google</button>
+           <button onClick={handleGoogleLogin}  className='btn btn-primary'>Login with Google</button>
            <p>Are you New? <Link className='text-red-400' to='/register'>Regiester</Link> </p>
      
          </div>
