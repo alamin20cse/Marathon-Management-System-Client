@@ -14,6 +14,8 @@ import Marathons from './Component/Marathons.jsx';
 import ErrorPage from './Pages/ErrorPage.jsx';
 import AuthProvider from './Component/AuthProvider.jsx';
 import Dashboard from './Pages/Dashboard.jsx';
+import MarathonDetails from './Pages/AddMarathons.jsx';
+import AddMarathons from './Pages/AddMarathons.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
       {
         path:'/dashboard',
         element:<Dashboard></Dashboard>
+      },
+      {
+        path:'/addmarathons',
+        element:<AddMarathons></AddMarathons>
       }
 
 

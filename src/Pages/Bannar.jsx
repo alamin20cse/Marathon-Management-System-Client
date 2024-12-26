@@ -1,7 +1,7 @@
 import React from 'react';
 import photo1 from '../assets/photo1.webp'
-import photo2 from '../assets/photo2.jpeg'
-import photo3 from '../assets/photo3.jpeg'
+import photo2 from '../assets/photo2.webp'
+import photo3 from '../assets/photo3.avif'
 import photo4 from '../assets/photo4.jpeg'
 
 const Bannar = () => {
