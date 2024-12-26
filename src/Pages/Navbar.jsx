@@ -131,7 +131,7 @@ const Navbar = () => {
 
           
            {/* User Profile Picture */}
-         <img
+         <img referrerPolicy="no-referrer"
                 className="w-10 h-10 rounded-full border-2 border-gray-300 hover:border-blue-500"
                 src={user?.photoURL || '/default-avatar.png'}
                 alt="User Profile"
