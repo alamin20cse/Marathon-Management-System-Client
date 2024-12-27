@@ -16,6 +16,8 @@ import AuthProvider from './Component/AuthProvider.jsx';
 import Dashboard from './Pages/Dashboard.jsx';
 import MarathonDetails from './Pages/AddMarathons.jsx';
 import AddMarathons from './Pages/AddMarathons.jsx';
+import MarathonsPage from './Pages/MarathonsPage.jsx';
+import Details from './Pages/Details.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,11 +41,28 @@ const router = createBrowserRouter([
       },
       {
         path:'/dashboard',
-        element:<Dashboard></Dashboard>
+        element:<Dashboard></Dashboard>,
+        children:[
+          {
+
+            
+          }
+        ]
       },
       {
         path:'/addmarathons',
         element:<AddMarathons></AddMarathons>
+      },
+      {
+        path:'/marathonspage',
+        element:<MarathonsPage></MarathonsPage>,
+        loader:()=>fetch(`http://localhost:5000/marathons`)
+      },
+      {
+        path: '/marathons/:id',
+        element: <Details></Details>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/marathons/${params.id}`)
       }
 
 

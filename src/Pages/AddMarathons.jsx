@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Swal from 'sweetalert2';
 
 const AddMarathons = () => {
   const [startRegistrationDate, setStartRegistrationDate] = useState(null);
@@ -17,7 +18,7 @@ const AddMarathons = () => {
 
     
 
-    const marathonDetails = {
+    const marathons = {
       marathonTitle: e.target.marathonTitle.value,
       startRegistrationDate,
       endRegistrationDate,
@@ -30,7 +31,36 @@ const AddMarathons = () => {
       totalRegistrationCount: 0,
     };
 
-    console.log('Marathon Details:', marathonDetails);
+    console.log('Marathon Details:', marathons);
+
+    fetch('http://localhost:5000/marathons',{
+        method:'POST',
+        headers:{
+            'content-type':'application/json'
+        },
+        body:JSON.stringify(marathons)
+
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        // console.log(data);
+
+        Swal.fire({
+            title: "Success",
+            text: "Successfully added the Marathon",
+            icon: "success"
+          });
+    })
+
+
+
+
+
+
+
+
+
+
   };
 
   return (
