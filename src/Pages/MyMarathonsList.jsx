@@ -33,6 +33,7 @@
     import React, { useContext, useEffect, useState } from 'react';
     import { AuthContex } from '../Component/AuthProvider';
     import { Link, useLoaderData } from 'react-router-dom';
+import Swal from 'sweetalert2';
     
     const MyMarathonsList = () => {
       const { user,loading } = useContext(AuthContex); // Get user from AuthContext
@@ -61,15 +62,75 @@
       //   return <span className="loading loading-spinner loading-lg"></span>;
       // }
       const handleDelet=(id)=>{
-        console.log(id);
-        fetch(`http://localhost:5000/marathons/${id}`,{
-          method:'DELETE',
-          
-        })
-        .then(res=>res.json())
-        .then(data=>{
-          console.log(data);
-        })
+
+
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+           
+
+
+
+            // for function
+            console.log(id);
+            fetch(`http://localhost:5000/marathons/${id}`,{
+              method:'DELETE',
+              
+            })
+            .then(res=>res.json())
+            .then(data=>{
+              if (data.deletedCount) {
+                 Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success"
+              
+            });
+
+
+            const updatedMarathons = mymarathon.filter((marathon) => marathon._id !== id);
+            setMymarathon(updatedMarathons);
+
+
+              }
+
+
+
+
+
+              console.log(data);
+            })
+
+
+
+
+
+
+
+          }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
 
       }
 
