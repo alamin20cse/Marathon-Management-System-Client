@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import MarathonsPageCard from './MarathonsPageCard';
+import { AuthContex } from '../Component/AuthProvider';
 
 const MarathonsPage = () => {
     const loadedMarathons=useLoaderData();
+    const {loading}=useContext(AuthContex);
+    if(loading)
+        {
+          return <span className="loading loading-spinner loading-lg"></span>;
+        }
 
     const {marathonTitle}=loadedMarathons;
     return (

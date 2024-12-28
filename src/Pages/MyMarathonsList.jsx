@@ -35,7 +35,7 @@
     import { Link, useLoaderData } from 'react-router-dom';
     
     const MyMarathonsList = () => {
-      const { user } = useContext(AuthContex); // Get user from AuthContext
+      const { user,loading } = useContext(AuthContex); // Get user from AuthContext
       const loadedMarathons = useLoaderData(); // Data passed from loader
       const [mymarathon, setMymarathon] = useState([]); // State to hold the list of marathons
     
@@ -52,10 +52,30 @@
       }, [user, loadedMarathons]); // Depend on both user and loadedMarathons
     
       const {marathonTitle,marathonImage,location,startRegistrationDate,endRegistrationDate,_id}=mymarathon;
-      // Loading state when user data is unavailable
-      if (!user) {
+      if(loading)
+      {
         return <span className="loading loading-spinner loading-lg"></span>;
       }
+      // Loading state when user data is unavailable
+      // if (!user) {
+      //   return <span className="loading loading-spinner loading-lg"></span>;
+      // }
+      const handleDelet=(id)=>{
+        console.log(id);
+        fetch(`http://localhost:5000/marathons/${id}`,{
+          method:'DELETE',
+          
+        })
+        .then(res=>res.json())
+        .then(data=>{
+          console.log(data);
+        })
+
+      }
+
+
+
+
     
       return (
         <div>
