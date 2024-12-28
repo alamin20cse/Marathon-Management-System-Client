@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Swal from 'sweetalert2';
+import { AuthContex } from '../Component/AuthProvider';
 
 const AddMarathons = () => {
+    const {user}=useContext(AuthContex);
   const [startRegistrationDate, setStartRegistrationDate] = useState(null);
   const [endRegistrationDate, setEndRegistrationDate] = useState(null);
   const [marathonStartDate, setMarathonStartDate] = useState(null);
@@ -28,6 +30,7 @@ const AddMarathons = () => {
       description: e.target.description.value,
       marathonImage: e.target.marathonImage.value,
       createdAt: new Date(),
+      email:user.email,
       totalRegistrationCount: 0,
     };
 
