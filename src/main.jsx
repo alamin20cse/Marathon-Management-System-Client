@@ -18,6 +18,7 @@ import MarathonDetails from './Pages/AddMarathons.jsx';
 import AddMarathons from './Pages/AddMarathons.jsx';
 import MarathonsPage from './Pages/MarathonsPage.jsx';
 import Details from './Pages/Details.jsx';
+import RegistrationMarathon from './Pages/RegistrationMarathon.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -63,9 +64,14 @@ const router = createBrowserRouter([
         element: <Details></Details>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/marathons/${params.id}`)
+      },
+      {
+        path: '/RegistrationMarathon/:id',
+        element: <RegistrationMarathon></RegistrationMarathon>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/RegistrationMarathon/${params.id}`)
       }
-
-
+      
 
 
 
