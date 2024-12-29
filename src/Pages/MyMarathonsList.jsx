@@ -84,7 +84,6 @@ import Swal from 'sweetalert2';
               method:'DELETE',
               
             })
-            .then(res=>res.json())
             .then(data=>{
               if (data.deletedCount) {
                  Swal.fire({
@@ -190,7 +189,7 @@ import Swal from 'sweetalert2';
 
 <td className="px-4 py-2 text-left">
 
-  <Link to={`/updatecampaigns/${marathon._id}`}>
+  <Link to={`/updatemarathon/${marathon._id}`}>
     <button className="btn btn-primary mr-2">Update</button>
 
   </Link>
