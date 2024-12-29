@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContex } from '../Component/AuthProvider';
+import Swal from 'sweetalert2';
 
 const RegistrationMarathon = () => {
     const {user}=useContext(AuthContex);
@@ -28,10 +29,44 @@ const RegistrationMarathon = () => {
         lastName,
         contactNumber,
         additionalInfo,
+        marathonID:_id,
 
     }
 
-    console.log(regiesterData);
+    // console.table(regiesterData)
+
+
+
+    
+    fetch('http://localhost:5000/marathonsreg',{
+      method:'POST',
+      headers:{
+          'content-type':'application/json'
+      },
+      body:JSON.stringify(regiesterData)
+
+  })
+  .then(res=>res.json())
+  .then(data=>{
+      console.log(data);
+
+      Swal.fire({
+          title: "Successfully Register",
+          text: "Successfully Register the Marathon",
+          icon: "success"
+        });
+  })
+
+
+
+
+
+
+
+
+
+
+
     
   }
   return (

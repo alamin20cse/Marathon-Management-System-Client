@@ -8,6 +8,7 @@ const Dashboard = () => {
             <NavLink className='btn' to='/addmarathons'>Add Marathons</NavLink>
             <NavLink className='btn' to='/marathonspage'>All Marathons</NavLink>
             <NavLink className='btn' to='/mymarathonslist'>My Marathons List</NavLink>
+            <NavLink className='btn' to='/myapply'>My Apply</NavLink>
             
         </div>
     );
