@@ -139,7 +139,7 @@ import Swal from 'sweetalert2';
     
       return (
         <div>
-          <h1>My List: {mymarathon.length}</h1>
+          <h1>My Marathons List: {mymarathon.length}</h1>
           <ul>
             {mymarathon.length === 0 ? (
               <li>No marathons found for you</li>

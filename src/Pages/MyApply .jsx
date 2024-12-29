@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContex } from '../Component/AuthProvider';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import MyApplyCard from './MyApplyCard';
 
 const MyApply  = () => {
@@ -30,6 +30,13 @@ const MyApply  = () => {
         {
           return <span className="loading loading-spinner loading-lg"></span>;
         }
+
+        const handleDelet=id=>{
+            console.log(id);
+        }
+
+
+
     return (
         <div>
             <h1>Tottal Registion : {regesteds.length}</h1>
@@ -39,7 +46,18 @@ const MyApply  = () => {
                     regesteds.map(apply=><MyApplyCard key={loadedApply._id} apply={apply} ></MyApplyCard>)
                 }
             </div>
-            
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             
