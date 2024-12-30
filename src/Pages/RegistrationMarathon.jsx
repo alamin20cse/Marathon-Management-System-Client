@@ -30,6 +30,7 @@ const RegistrationMarathon = () => {
         contactNumber,
         additionalInfo,
         marathonID:_id,
+        
 
     }
 

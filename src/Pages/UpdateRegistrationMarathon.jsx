@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContex } from '../Component/AuthProvider';
+import Swal from 'sweetalert2';
 
 const UpdateRegistrationMarathon = () => {
     const loadedData=useLoaderData();
@@ -32,8 +33,53 @@ const UpdateRegistrationMarathon = () => {
         lastName,
         contactNumber,
         additionalInfo,
+        marathonID:loadedData.marathonID,
       }
      console.table(newData);
+
+
+
+
+
+
+
+     fetch(`http://localhost:5000/marathonsreg/${loadedData._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.modifiedCount > 0) {
+            Swal.fire({
+              title: 'Updated',
+              text: 'Successfully updated the Reg',
+              icon: 'success',
+            });
+            // navigate('/mycampaign');
+          }
+        })
+        .catch((err) => {
+          console.error('Error updating reg:', err);
+          Swal.fire({
+            title: 'Error',
+            text: 'Failed to update the reg. Please try again.',
+            icon: 'error',
+          });
+        });
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
