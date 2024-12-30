@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContex } from '../Component/AuthProvider';
 import Swal from 'sweetalert2';
@@ -7,6 +7,12 @@ const UpdateRegistrationMarathon = () => {
     const loadedData=useLoaderData();
     const {user,loading}=useContext(AuthContex);
     console.log(loadedData);
+
+    useEffect(()=>{
+
+        document.title='Update Registration Marathon';
+      })
+    
 
     
     if (loading) {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import MarathonsPageCard from './MarathonsPageCard';
 import { AuthContex } from '../Component/AuthProvider';
@@ -12,6 +12,14 @@ const MarathonsPage = () => {
         }
 
     const {marathonTitle}=loadedMarathons;
+
+     useEffect(()=>{
+    
+            document.title='Marathon page';
+          })
+
+
+
     return (
         <div>
             <h1>All Marathons : {loadedMarathons.length}</h1>

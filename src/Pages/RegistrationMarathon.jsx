@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContex } from '../Component/AuthProvider';
 import Swal from 'sweetalert2';
@@ -7,6 +7,15 @@ const RegistrationMarathon = () => {
     const {user}=useContext(AuthContex);
   const marathon = useLoaderData();
   const  {marathonTitle,marathonImage,location,startRegistrationDate,endRegistrationDate,marathonStartDate,_id}=marathon
+
+
+   useEffect(()=>{
+  
+          document.title='Registration Marathon';
+        })
+
+
+
 
   const handleSubmit=e=>{
     e.preventDefault();

@@ -24,6 +24,7 @@ import UpdateMarathon from './Pages/UpdateMarathon.jsx';
 import MyApply from './Pages/MyApply .jsx';
 import MyApplyList from './Pages/MyApplyList.jsx';
 import UpdateRegistrationMarathon from './Pages/UpdateRegistrationMarathon.jsx';
+import PrivateRoute from './Pages/PrivateRoute.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -57,16 +58,16 @@ const router = createBrowserRouter([
       },
       {
         path:'/addmarathons',
-        element:<AddMarathons></AddMarathons>
+        element:<PrivateRoute><AddMarathons></AddMarathons></PrivateRoute>,
       },
       {
         path:'/marathonspage',
-        element:<MarathonsPage></MarathonsPage>,
+        element:<PrivateRoute><MarathonsPage></MarathonsPage></PrivateRoute>,
         loader:()=>fetch(`http://localhost:5000/marathons`)
       },
       {
         path: '/marathons/:id',
-        element: <Details></Details>,
+        element: <PrivateRoute><Details></Details></PrivateRoute>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/marathons/${params.id}`)
       },
@@ -78,7 +79,7 @@ const router = createBrowserRouter([
       },
       {
         path:'/mymarathonslist',
-        element:<MyMarathonsList></MyMarathonsList>,
+        element:<PrivateRoute><MyMarathonsList></MyMarathonsList></PrivateRoute>,
         loader:()=>fetch(`http://localhost:5000/marathons`)
        
           
@@ -91,7 +92,7 @@ const router = createBrowserRouter([
       },
       {
         path:'/myapply',
-        element:<MyApply></MyApply>,
+        element:<PrivateRoute><MyApply></MyApply></PrivateRoute>,
         loader:()=>fetch('http://localhost:5000/marathonsreg')
       },
       

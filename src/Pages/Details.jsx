@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 
 const Details = () => {
@@ -21,6 +21,10 @@ const Details = () => {
   const currentDate = new Date();
   const startDate = new Date(startRegistrationDate);
   const endDate = new Date(endRegistrationDate);
+   useEffect(()=>{
+  
+          document.title='Details';
+        })
 
   // Check if registration is open
   const isRegistrationOpen = currentDate >= startDate && currentDate <= endDate;

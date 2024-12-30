@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const ErrorPage = () => {
+
+     useEffect(()=>{
+    
+            document.title='Error';
+          })
     return (
         <div>
             <h1>Error </h1>

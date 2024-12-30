@@ -41,6 +41,11 @@ import Swal from 'sweetalert2';
       const [mymarathon, setMymarathon] = useState([]); // State to hold the list of marathons
     
       useEffect(() => {
+
+        
+        
+                document.title='My Marathon List';
+             
         // Check if user is available and if the loaded data contains marathons for that email
         if (user?.email && Array.isArray(loadedMarathons)) {
           const userMarathons = loadedMarathons.filter(

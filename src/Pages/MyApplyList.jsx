@@ -11,6 +11,12 @@ const MyApplyList = () => {
 
 
     useEffect(() => {
+
+
+        
+        
+                document.title='My Apply List';
+            
         // Check if user is available and if the loaded data contains marathons for that email
         if (user?.email && Array.isArray(loadedApply)) {
             const userRegstion = loadedApply.filter(

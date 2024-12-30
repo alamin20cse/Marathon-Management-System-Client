@@ -9,6 +9,9 @@ const UpdateMarathon = () => {
   const { user } = useContext(AuthContex);
   const loadedMarathon = useLoaderData();
 
+
+
+
   // Initialize states with loadedMarathon values
   const [startRegistrationDate, setStartRegistrationDate] = useState(
     loadedMarathon?.startRegistrationDate ? new Date(loadedMarathon.startRegistrationDate) : null
@@ -20,6 +23,13 @@ const UpdateMarathon = () => {
     loadedMarathon?.marathonStartDate ? new Date(loadedMarathon.marathonStartDate) : null
   );
   const [runningDistance, setRunningDistance] = useState(loadedMarathon?.runningDistance || '25k');
+
+   useEffect(()=>{
+  
+          document.title='Update Marathon';
+        })
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

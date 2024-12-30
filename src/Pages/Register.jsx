@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Swal from "sweetalert2";
@@ -10,6 +10,11 @@ const Register = () => {
     const navigate = useNavigate();
 
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
+
+     useEffect(()=>{
+    
+            document.title='Register';
+          })
 
     const handleRegister = (e) => {
         e.preventDefault();
