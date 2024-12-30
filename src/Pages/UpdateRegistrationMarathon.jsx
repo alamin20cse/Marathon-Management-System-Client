@@ -1,9 +1,41 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useLoaderData } from 'react-router-dom';
+import { AuthContex } from '../Component/AuthProvider';
 
 const UpdateRegistrationMarathon = () => {
+    const loadedData=useLoaderData();
+    const {user,loading}=useContext(AuthContex);
+    console.log(loadedData);
 
-    const handleSubmit=id=>{
-        console.log(id);
+    
+    if (loading) {
+        return <span className="loading loading-spinner loading-lg"></span>;
+    }
+
+
+    const handleSubmit=e=>{
+      e.preventDefault();
+      const email=e.target.email.value;
+      const marathonTitle=e.target.marathonTitle.value;
+      const marathonStartDate=e.target.marathonStartDate.value;
+      const firstName=e.target.firstName.value;
+      const lastName=e.target.lastName.value;
+      const contactNumber=e.target.contactNumber.value;
+      const additionalInfo=e.target.additionalInfo.value;
+
+
+      const newData={
+        email,
+        marathonTitle,
+        marathonStartDate,
+        firstName,
+        lastName,
+        contactNumber,
+        additionalInfo,
+      }
+     console.table(newData);
+
+
     }
     return (
         <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md">
@@ -17,8 +49,8 @@ const UpdateRegistrationMarathon = () => {
           <input
             type="email"
             name="email"
-            // value={user?.email}
-            // readOnly
+            value={user?.email}
+            readOnly
             className="input input-bordered"
           />
         </div>
@@ -29,10 +61,10 @@ const UpdateRegistrationMarathon = () => {
             <span className="label-text">Marathon Title</span>
           </label>
           <input
-          name=''
+          name='marathonTitle'
             type="text"
-            // value={marathonTitle}
-            // readOnly
+            value={loadedData.marathonTitle}
+            readOnly
             className="input input-bordered"
           />
         </div>
@@ -45,8 +77,8 @@ const UpdateRegistrationMarathon = () => {
           <input
           name='marathonStartDate'
             type="text"
-            // value={marathonStartDate}
-            // readOnly
+            value={loadedData.marathonStartDate}
+            readOnly
             className="input input-bordered"
           />
         </div>
@@ -61,7 +93,7 @@ const UpdateRegistrationMarathon = () => {
             name="firstName"
            
            
-            placeholder="Enter your first name"
+           defaultValue={loadedData.firstName}
             className="input input-bordered"
             required
           />
@@ -75,8 +107,8 @@ const UpdateRegistrationMarathon = () => {
           <input
             type="text"
             name="lastName"
+           defaultValue={loadedData.lastName}
            
-            placeholder="Enter your last name"
             className="input input-bordered"
             required
           />
@@ -91,7 +123,7 @@ const UpdateRegistrationMarathon = () => {
             type="tel"
             name="contactNumber"
           
-            placeholder="Enter your contact number"
+          defaultValue={loadedData.contactNumber}
             className="input input-bordered"
             required
           />
@@ -105,7 +137,7 @@ const UpdateRegistrationMarathon = () => {
           <textarea
             name="additionalInfo"
            
-            placeholder="Provide any additional information"
+          defaultValue={loadedData.additionalInfo}
             className="textarea textarea-bordered"
           ></textarea>
         </div>

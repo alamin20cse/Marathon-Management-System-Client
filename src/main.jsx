@@ -102,7 +102,9 @@ const router = createBrowserRouter([
       },
       {
         path:'/updateregistrationmarathon/:id',
-        element:<UpdateRegistrationMarathon></UpdateRegistrationMarathon>
+        element:<UpdateRegistrationMarathon></UpdateRegistrationMarathon>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/marathonsreg/${params.id}`)
       }
 
       
