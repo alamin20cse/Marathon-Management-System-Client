@@ -164,7 +164,7 @@ const MyApplyList = () => {
 
                                             <td className="px-4 py-2 text-left">
 
-                                                <Link to={`/myapplylist/${marathon._id}`}>
+                                                <Link to={`/updateregistrationmarathon/${marathon._id}`}>
                                                     <button className="btn btn-primary mr-2">Update</button>
 
                                                 </Link>
