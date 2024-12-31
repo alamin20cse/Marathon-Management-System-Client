@@ -99,7 +99,7 @@ const router = createBrowserRouter([
       {
         path:'/myapplylist',
         element:<MyApplyList></MyApplyList>,
-        loader:()=>fetch('http://localhost:5000/marathonsreg')
+        
       },
       {
         path:'/updateregistrationmarathon/:id',

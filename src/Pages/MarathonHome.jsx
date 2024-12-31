@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MarathonHomeCard from './MarathonHomeCard';
+import { AuthContex } from '../Component/AuthProvider';
 
 const MarathonHome = () => {
+    
 
     const [marathons,setmarathons]=useState([]);
+    const {loading}=useContext(AuthContex)
 
     useEffect(()=>{
 
@@ -17,6 +20,9 @@ const MarathonHome = () => {
     },[])
 
 
+    if (loading) {
+        return <span className="loading loading-spinner loading-lg"></span>;
+    }
 
 
     return (

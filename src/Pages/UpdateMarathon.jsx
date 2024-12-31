@@ -2,15 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AuthContex } from '../Component/AuthProvider';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const UpdateMarathon = () => {
   const { user } = useContext(AuthContex);
   const loadedMarathon = useLoaderData();
-
-
-
+  const navigate=useNavigate();
 
   // Initialize states with loadedMarathon values
   const [startRegistrationDate, setStartRegistrationDate] = useState(
@@ -24,21 +22,21 @@ const UpdateMarathon = () => {
   );
   const [runningDistance, setRunningDistance] = useState(loadedMarathon?.runningDistance || '25k');
 
-   useEffect(()=>{
-  
-          document.title='Update Marathon';
-        })
+  useEffect(() => {
+    document.title = 'Update Marathon';
+  }, []);
 
-
+  const formatDate = (date) =>
+    date ? date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const updatedMarathon = {
       marathonTitle: e.target.marathonTitle.value,
-      startRegistrationDate,
-      endRegistrationDate,
-      marathonStartDate,
+      startRegistrationDate: formatDate(startRegistrationDate),
+      endRegistrationDate: formatDate(endRegistrationDate),
+      marathonStartDate: formatDate(marathonStartDate),
       location: e.target.location.value,
       runningDistance,
       description: e.target.description.value,
@@ -49,47 +47,32 @@ const UpdateMarathon = () => {
 
     console.log('Updated Marathon Details:', updatedMarathon);
 
-
     fetch(`http://localhost:5000/marathons/${loadedMarathon._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedMarathon),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.modifiedCount > 0) {
-            Swal.fire({
-              title: 'Updated',
-              text: 'Successfully updated the campaign',
-              icon: 'success',
-            });
-            // navigate('/mycampaign');
-          }
-        })
-        .catch((err) => {
-          console.error('Error updating campaign:', err);
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedMarathon),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
           Swal.fire({
-            title: 'Error',
-            text: 'Failed to update the campaign. Please try again.',
-            icon: 'error',
+            title: 'Updated',
+            text: 'Successfully updated the marathon',
+            icon: 'success',
           });
+          navigate('/mymarathonslist');
+        }
+      })
+      .catch((err) => {
+        console.error('Error updating marathon:', err);
+        Swal.fire({
+          title: 'Error',
+          text: 'Failed to update the marathon. Please try again.',
+          icon: 'error',
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      });
   };
 
   return (

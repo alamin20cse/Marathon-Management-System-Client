@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContex } from '../Component/AuthProvider';
 
 const UpcomingMarathon = () => {
     const [marathons, setMarathons] = useState([]);
+    const {loading}=useContext(AuthContex);
 
     useEffect(() => {
         fetch(`http://localhost:5000/marathonsupcoming`)
@@ -19,6 +21,12 @@ const UpcomingMarathon = () => {
                 setMarathons(upcomingMarathons.slice(0, 6));
             });
     }, []);
+
+    
+    if (loading) {
+        return <span className="loading loading-spinner loading-lg"></span>;
+    }
+
 
     return (
         <div className="container mx-auto p-4">
