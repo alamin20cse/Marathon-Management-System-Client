@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 const Details = () => {
   const loadedData = useLoaderData();
@@ -21,13 +22,34 @@ const Details = () => {
   const currentDate = new Date();
   const startDate = new Date(startRegistrationDate);
   const endDate = new Date(endRegistrationDate);
-   useEffect(()=>{
-  
-          document.title='Details';
-        })
+  const targetDate = new Date(marathonStartDate); // Use marathon start date as target
+
+  useEffect(() => {
+    document.title = 'Details';
+  }, []);
 
   // Check if registration is open
   const isRegistrationOpen = currentDate >= startDate && currentDate <= endDate;
+
+  // Calculate remaining time
+  const calculateRemainingTime = () => {
+    const remainingTimeInMilliseconds = targetDate - currentDate;
+    const days = Math.floor(remainingTimeInMilliseconds / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((remainingTimeInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((remainingTimeInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((remainingTimeInMilliseconds % (1000 * 60)) / 1000);
+    return { days, hours, minutes, seconds };
+  };
+
+  const [remainingTime, setRemainingTime] = useState(calculateRemainingTime());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRemainingTime(calculateRemainingTime());
+    }, 1000); // Update every second
+
+    return () => clearInterval(timer); // Clean up on unmount
+  }, [targetDate]);
 
   return (
     <div className="card bg-gray-200 w-full max-w-lg mx-auto shadow-xl">
@@ -64,6 +86,22 @@ const Details = () => {
             </button>
           )}
         </div>
+
+        {/* Countdown Timer */}
+        <p>Time Left Until Marathon Starts:</p>
+        <div className="text-xl font-bold">
+          {remainingTime.days} days, {remainingTime.hours} hours, {remainingTime.minutes} minutes, {remainingTime.seconds} seconds
+        </div>
+
+        {/* Countdown Circle Timer */}
+        <CountdownCircleTimer
+          isPlaying
+          duration={remainingTime.days * 24 * 60 * 60 + remainingTime.hours * 60 * 60 + remainingTime.minutes * 60 + remainingTime.seconds}
+          colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+          colorsTime={[7, 5, 2, 0]}
+        >
+          {({ remainingTime }) => remainingTime}
+        </CountdownCircleTimer>
       </div>
     </div>
   );
