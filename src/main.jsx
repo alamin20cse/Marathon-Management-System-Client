@@ -63,7 +63,7 @@ const router = createBrowserRouter([
       {
         path:'/marathonspage',
         element:<PrivateRoute><MarathonsPage></MarathonsPage></PrivateRoute>,
-        loader:()=>fetch(`http://localhost:5000/marathons`)
+       
       },
       {
         path: '/marathons/:id',
