@@ -80,7 +80,7 @@ const router = createBrowserRouter([
       {
         path:'/mymarathonslist',
         element:<PrivateRoute><MyMarathonsList></MyMarathonsList></PrivateRoute>,
-        loader:()=>fetch(`http://localhost:5000/marathons`)
+       
        
           
       },
@@ -93,19 +93,21 @@ const router = createBrowserRouter([
       {
         path:'/myapply',
         element:<PrivateRoute><MyApply></MyApply></PrivateRoute>,
-        loader:()=>fetch('http://localhost:5000/marathonsreg')
+       
       },
       
       {
         path:'/myapplylist',
-        element:<MyApplyList></MyApplyList>,
+        element:<PrivateRoute><MyApplyList></MyApplyList></PrivateRoute>,
         
       },
       {
         path:'/updateregistrationmarathon/:id',
         element:<UpdateRegistrationMarathon></UpdateRegistrationMarathon>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/marathonsreg/${params.id}`)
+          fetch(`http://localhost:5000/marathonsreg/${params.id}`,{
+             credentials:'include'
+          })
       }
 
       

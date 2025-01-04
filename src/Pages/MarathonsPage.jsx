@@ -1,17 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MarathonsPageCard from './MarathonsPageCard';
 import { AuthContex } from '../Component/AuthProvider';
+import { useNavigate } from 'react-router-dom'; // Add this if you are using navigate
 
 const MarathonsPage = () => {
   const [loadedMarathons, setLoadedMarathons] = useState([]);
-  const { loading } = useContext(AuthContex);
+  const { loading, logOut } = useContext(AuthContex);
   const [sort, setSort] = useState('');
+  const navigate = useNavigate(); // Initialize navigate function
 
   useEffect(() => {
-    fetch(`http://localhost:5000/marathons?sort=${sort}`)
-      .then((res) => res.json())
-      .then((data) => setLoadedMarathons(data));
-  }, [sort]); // Include `sort` as a dependency
+    fetch(`http://localhost:5000/marathons?sort=${sort}`, {
+      credentials: 'include', // Move credentials inside fetch options
+    })
+      .then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          logOut();
+          navigate('/login'); // Redirect to login page if unauthorized
+          return;
+        }
+        return res.json(); // Return JSON data
+      })
+      .then((data) => setLoadedMarathons(data))
+      .catch((error) => console.error('Error fetching data:', error)); // Catch any fetch errors
+  }, [sort, logOut, navigate]); // Add logOut and navigate as dependencies
 
   useEffect(() => {
     document.title = 'Marathon Page';
@@ -29,7 +41,7 @@ const MarathonsPage = () => {
           className="btn mr-2"
           onClick={() => setSort('asc')}
         >
-          Sort Oldest created
+          Sort Oldest Created
         </button>
         <button
           className="btn"
@@ -40,7 +52,7 @@ const MarathonsPage = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:grid-cols-2">
         {loadedMarathons.map((marathon) => (
-          <MarathonsPageCard key={marathon._id} marathon={marathon}></MarathonsPageCard>
+          <MarathonsPageCard key={marathon._id} marathon={marathon} />
         ))}
       </div>
     </div>

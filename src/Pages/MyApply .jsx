@@ -1,72 +1,93 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContex } from '../Component/AuthProvider';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MyApplyCard from './MyApplyCard';
 
-const MyApply  = () => {
-    const {loading,user}=useContext(AuthContex);
-    const loadedApply=useLoaderData();
-    const [regesteds,setregsteds]=useState([]);
+const MyApply = () => {
+  const { loading, user, logOut } = useContext(AuthContex); // Get user and other context values
+  const [loadedApply, setLoadedApply] = useState([]); // All registrations
+  const [regesteds, setRegsteds] = useState([]); // User-specific registrations
+  const navigate = useNavigate(); // Navigate for unauthorized access
 
+  // Fetch registration data
+  useEffect(() => {
+    const fetchRegistrations = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/marathonsreg`, {
+          credentials: 'include',
+        });
 
-
-     useEffect(() => {
-      
-      
-              document.title='My Apply list';
-           
-            // Check if user is available and if the loaded data contains marathons for that email
-            if (user?.email && Array.isArray(loadedApply)) {
-              const userRegstion = loadedApply.filter(
-                (reg) => reg.email === user.email // Filter based on user email
-              );
-              setregsteds (userRegstion); // Set filtered marathons
-            } else {
-              setregsteds([]); // Clear the list if no matching email
-            }
-          }, [user, loadedApply]); // Depend on both user and loadedMarathons
-
-
-
-
-
-    if(loading)
-        {
-          return <span className="loading loading-spinner loading-lg"></span>;
+        if (res.status === 401 || res.status === 403) {
+          logOut();
+          navigate('/login');
+          return;
         }
 
-        const handleDelet=id=>{
-            console.log(id);
-        }
+        const data = await res.json();
+        setLoadedApply(data);
+      } catch (error) {
+        console.error('Error fetching registrations:', error.message);
+      }
+    };
 
+    fetchRegistrations();
+  }, [logOut, navigate]);
 
+  // Filter user-specific registrations
+  useEffect(() => {
+    document.title = 'My Apply List'; // Set page title
 
-    return (
-        <div>
-            <h1>Tottal Registion : {regesteds.length}</h1>
+    if (user?.email && Array.isArray(loadedApply)) {
+      const userRegistration = loadedApply.filter(
+        (reg) => reg.email === user.email // Match by user email
+      );
+      setRegsteds(userRegistration); // Update state with filtered registrations
+    } else {
+      setRegsteds([]); // Reset to empty if no matching data
+    }
+  }, [user, loadedApply]);
 
-            <div>
-                {
-                    regesteds.map(apply=><MyApplyCard key={loadedApply._id} apply={apply} ></MyApplyCard>)
-                }
-            </div>
+  // Loading spinner
+  if (loading) {
+    return <span className="loading loading-spinner loading-lg"></span>;
+  }
 
+  // Handle delete functionality
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:5000/marathonsreg/${id}`, {
+        method: 'DELETE',
+      });
 
+      const data = await res.json();
+      if (data.deletedCount) {
+        console.log(`Successfully deleted registration with ID: ${id}`);
+        setRegsteds((prev) => prev.filter((reg) => reg._id !== id)); // Remove deleted item
+      }
+    } catch (error) {
+      console.error('Error deleting registration:', error.message);
+    }
+  };
 
+  return (
+    <div>
+      <h1>Total Registrations: {regesteds.length}</h1>
 
-
-
-
-
-
-
-
-
-
-
-            
-        </div>
-    );
+      <div>
+        {regesteds.length === 0 ? (
+          <p>No registrations found</p>
+        ) : (
+          regesteds.map((apply) => (
+            <MyApplyCard
+              key={apply._id}
+              apply={apply}
+              handleDelete={handleDelete} // Pass delete handler to the card
+            />
+          ))
+        )}
+      </div>
+    </div>
+  );
 };
 
-export default MyApply ;
+export default MyApply;

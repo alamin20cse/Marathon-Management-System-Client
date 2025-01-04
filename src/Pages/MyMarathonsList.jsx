@@ -30,203 +30,145 @@
     // }, [user]);
     
    
+
+
+
+
+
+
+
+
+    
     import React, { useContext, useEffect, useState } from 'react';
     import { AuthContex } from '../Component/AuthProvider';
-    import { Link, useLoaderData } from 'react-router-dom';
-import Swal from 'sweetalert2';
+    import { Link, useNavigate } from 'react-router-dom';
+    import Swal from 'sweetalert2';
     
     const MyMarathonsList = () => {
-      const { user,loading } = useContext(AuthContex); // Get user from AuthContext
-      const loadedMarathons = useLoaderData(); // Data passed from loader
-      const [mymarathon, setMymarathon] = useState([]); // State to hold the list of marathons
+      const { user, loading, logOut } = useContext(AuthContex); // Get user context
+      const [loadedMarathons, setLoadedMarathons] = useState([]); // All marathons
+      const [mymarathon, setMymarathon] = useState([]); // User-specific marathons
+      const navigate = useNavigate(); // Navigation for redirects
     
+      // Fetch all marathons on component mount
       useEffect(() => {
-
-        
-        
-                document.title='My Marathon List';
-             
-        // Check if user is available and if the loaded data contains marathons for that email
-        if (user?.email && Array.isArray(loadedMarathons)) {
-          const userMarathons = loadedMarathons.filter(
-            (marathon) => marathon.email === user.email // Filter based on user email
-          );
-          setMymarathon(userMarathons); // Set filtered marathons
-        } else {
-          setMymarathon([]); // Clear the list if no matching email
-        }
-      }, [user, loadedMarathons]); // Depend on both user and loadedMarathons
+        const fetchMarathons = async () => {
+          try {
+            const res = await fetch(`http://localhost:5000/marathons`, { credentials: 'include' });
     
-      const {marathonTitle,marathonImage,location,startRegistrationDate,endRegistrationDate,_id}=mymarathon;
-      if(loading)
-      {
+            if (res.status === 401 || res.status === 403) {
+              logOut();
+              navigate('/login');
+              return;
+            }
+    
+            const data = await res.json();
+            if (Array.isArray(data)) {
+              setLoadedMarathons(data);
+            } else {
+              console.error('Unexpected response format:', data);
+              setLoadedMarathons([]); // Reset to empty array if invalid data
+            }
+          } catch (error) {
+            console.error('Error fetching all marathons:', error.message);
+          }
+        };
+    
+        fetchMarathons();
+      }, [logOut, navigate]);
+    
+      // Filter user-specific marathons
+      useEffect(() => {
+        if (user?.email) {
+          const userMarathons = loadedMarathons.filter(
+            (marathon) => marathon.email === user.email
+          );
+          setMymarathon(userMarathons);
+        }
+      }, [user, loadedMarathons]);
+    
+      // Handle loading state
+      if (loading) {
         return <span className="loading loading-spinner loading-lg"></span>;
       }
-      // Loading state when user data is unavailable
-      // if (!user) {
-      //   return <span className="loading loading-spinner loading-lg"></span>;
-      // }
-      const handleDelet=(id)=>{
-
-
+    
+      // Delete a marathon
+      const handleDelete = async (id) => {
         Swal.fire({
-          title: "Are you sure?",
+          title: 'Are you sure?',
           text: "You won't be able to revert this!",
-          icon: "warning",
+          icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!',
+        }).then(async (result) => {
           if (result.isConfirmed) {
-           
-
-
-
-            // for function
-            console.log(id);
-            fetch(`http://localhost:5000/marathons/${id}`,{
-              method:'DELETE',
-              
-            })
-            .then(data=>{
+            try {
+              const res = await fetch(`http://localhost:5000/marathons/${id}`, {
+                method: 'DELETE',
+              });
+              const data = await res.json();
               if (data.deletedCount) {
-                 Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success"
-              
-            });
-
-
-            const updatedMarathons = mymarathon.filter((marathon) => marathon._id !== id);
-            setMymarathon(updatedMarathons);
-
-
+                Swal.fire('Deleted!', 'The marathon has been deleted.', 'success');
+                setMymarathon((prev) => prev.filter((marathon) => marathon._id !== id));
               }
-
-
-
-
-
-              console.log(data);
-            })
-
-
-
-
-
-
-
+            } catch (error) {
+              console.error('Error deleting marathon:', error.message);
+            }
           }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
-
-      }
-
-
-
-
+      };
     
       return (
         <div>
-          <h1>My Marathons List: {mymarathon.length}</h1>
-          <ul>
-            {mymarathon.length === 0 ? (
-              <li>No marathons found for you</li>
-            ) : (
-              <div className="overflow-x-auto">
+          <h1 className="text-2xl font-semibold mb-4">My Marathons List: {mymarathon.length}</h1>
+          {mymarathon.length === 0 ? (
+            <p className="text-gray-500">No marathons found for you.</p>
+          ) : (
+            <div className="overflow-x-auto">
               <table className="table-auto w-full bg-white shadow-lg rounded-lg">
                 <thead className="bg-gray-100">
                   <tr>
                     <th className="px-4 py-2 text-left">Serial</th>
                     <th className="px-4 py-2 text-left">Title</th>
                     <th className="px-4 py-2 text-left">Image</th>
-                    <th className="px-4 w-5 py-2 text-left">Start Registration Date</th>
+                    <th className="px-4 py-2 text-left">Start Registration Date</th>
                     <th className="px-4 py-2 text-left">End Registration Date</th>
                     <th className="px-4 py-2 text-left">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-
+                  {mymarathon.map((marathon, index) => (
+                    <tr key={marathon._id} className="border-t">
+                      <td className="px-4 py-2 text-left">{index + 1}</td>
+                      <td className="px-4 py-2 text-left">{marathon.marathonTitle}</td>
+                      <td className="px-4 py-2 text-left">
+                        <img
+                          src={marathon.marathonImage}
+                          alt={marathon.marathonTitle}
+                          className="h-16 w-16 rounded-full object-cover"
+                        />
+                      </td>
+                      <td className="px-4 py-2 text-left">{marathon.startRegistrationDate}</td>
+                      <td className="px-4 py-2 text-left">{marathon.endRegistrationDate}</td>
+                      <td className="px-4 py-2 text-left">
+                        <Link to={`/updatemarathon/${marathon._id}`}>
+                          <button className="btn btn-primary mr-2">Update</button>
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(marathon._id)}
+                          className="btn btn-secondary"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
-
-                {
-                  
-                  mymarathon.map((marathon, index) => (
-
-
-// jj
-
-<tr key={index} className="border-t">
-{/* 1 */}
-<td className="px-4 py-2 text-left">{index + 1}</td>
-{/* 2 */}
-<td className="px-4 w-10 py-2 text-left">{marathon.marathonTitle}</td>
-
-{/* 3 */}
-<td className="px-4 py-2 text-left">
-  <img
-    src={marathon.marathonImage}
-    alt={marathon.marathonTitle}
-    className="h-16 w-16 rounded-full object-cover"
-  />
-</td>
-
-{/* 4 */}
-<td className="px-4 py-2 text-left text-gray-600">{marathon.startRegistrationDate}</td>
-
-<td className="px-4 py-2 text-left">{marathon.endRegistrationDate}</td>
-
-<td className="px-4 py-2 text-left">
-
-  <Link to={`/updatemarathon/${marathon._id}`}>
-    <button className="btn btn-primary mr-2">Update</button>
-
-  </Link>
-  <button onClick={() => handleDelet(marathon._id)} className="btn btn-secondary">Delete</button>
-</td>
-</tr>
-
-// jj
-
-
-
-
-
-
-
-                   
-                  ))
-                }
-              
               </table>
             </div>
-              
-
-
-
-          
-
-
-
-
-            )}
-          </ul>
+          )}
         </div>
       );
     };
