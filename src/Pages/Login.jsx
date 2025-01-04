@@ -50,7 +50,8 @@ const Login = () => {
       handelGooglSignIn()
         .then(() => {
           navigate(location?.state?location.state:'/');
-          Swal.fire('Succesfully Login')
+          Swal.fire('Succesfully Login');
+          // gene
         })
         .catch(error => {
          Swal.fire(error.message); // Error notification
