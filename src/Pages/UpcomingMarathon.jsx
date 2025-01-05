@@ -6,7 +6,7 @@ const UpcomingMarathon = () => {
     const {loading}=useContext(AuthContex);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/marathonsupcoming`)
+        fetch(`https://marathon-management-system-server-theta.vercel.app/marathonsupcoming`)
             .then(res => res.json())
             .then(data => {
                 const today = new Date(); // Get current date

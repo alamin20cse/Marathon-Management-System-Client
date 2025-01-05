@@ -92,7 +92,7 @@ const AuthProvider = ({children}) => {
                 setUser(currentUser);
     
                 try {
-                    const { data } = await axios.post(`http://localhost:5000/jwt`, {
+                    const { data } = await axios.post(`https://marathon-management-system-server-theta.vercel.app/jwt`, {
                         email: currentUser.email,
                     },{
                         withCredentials: true
@@ -108,7 +108,7 @@ const AuthProvider = ({children}) => {
                 setUser(null); // Clear user if no user is signed in
 
 
-                const { data } = await axios.get(`http://localhost:5000/logout`,{
+                const { data } = await axios.get(`https://marathon-management-system-server-theta.vercel.app/logout`,{
                     withCredentials: true
                 });
             }

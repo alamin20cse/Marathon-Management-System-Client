@@ -10,7 +10,7 @@ const MarathonHome = () => {
 
     useEffect(()=>{
 
-        fetch(`http://localhost:5000/marathonslimit`)
+        fetch(`https://marathon-management-system-server-theta.vercel.app/marathonslimit`)
         .then(res=>res.json())
         .then(data=>{
             setmarathons(data);

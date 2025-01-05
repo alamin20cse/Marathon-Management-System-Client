@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const AxiosSecure = axios.create({
-  baseURL: 'http://localhost:5000/marathonsreg',
+  baseURL: 'https://marathon-management-system-server-theta.vercel.app/marathonsreg',
   credentials: 'include',
 });

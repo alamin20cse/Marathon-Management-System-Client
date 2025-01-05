@@ -8,7 +8,7 @@
 
     // const fetchAllMyMarathon = async () => {
     //     try {
-    //         const response = await axios.get(`http://localhost:5000/marathons/${user?.email}`);
+    //         const response = await axios.get(`https://marathon-management-system-server-theta.vercel.app/marathons/${user?.email}`);
     //         setMymarathon(response.data); // Set the fetched data to the state
     //     } catch (err) {
     //         console.error('Error fetching data:', err.message);
@@ -17,7 +17,7 @@
 
     // useEffect(() => {
     //     if (user?.email) {
-    //         fetch(`http://localhost:5000/marathons/${user.email}`)
+    //         fetch(`https://marathon-management-system-server-theta.vercel.app/marathons/${user.email}`)
     //             .then((res) => res.json())
     //             .then((data) => {
     //                 console.log('Fetched marathons:', data);
@@ -54,7 +54,7 @@
       useEffect(() => {
         const fetchMarathons = async () => {
           try {
-            const res = await fetch(`http://localhost:5000/marathons`, { credentials: 'include' });
+            const res = await fetch(`https://marathon-management-system-server-theta.vercel.app/marathons`, { credentials: 'include' });
     
             if (res.status === 401 || res.status === 403) {
               logOut();
@@ -105,7 +105,7 @@
         }).then(async (result) => {
           if (result.isConfirmed) {
             try {
-              const res = await fetch(`http://localhost:5000/marathons/${id}`, {
+              const res = await fetch(`https://marathon-management-system-server-theta.vercel.app/marathons/${id}`, {
                 method: 'DELETE',
               });
               const data = await res.json();

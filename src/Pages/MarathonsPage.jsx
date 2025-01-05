@@ -10,7 +10,7 @@ const MarathonsPage = () => {
   const navigate = useNavigate(); // Initialize navigate function
 
   useEffect(() => {
-    fetch(`http://localhost:5000/marathons?sort=${sort}`, {
+    fetch(`https://marathon-management-system-server-theta.vercel.app/marathons?sort=${sort}`, {
       credentials: 'include', // Move credentials inside fetch options
     })
       .then((res) => {

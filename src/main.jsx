@@ -69,13 +69,13 @@ const router = createBrowserRouter([
         path: '/marathons/:id',
         element: <PrivateRoute><Details></Details></PrivateRoute>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/marathons/${params.id}`)
+          fetch(`https://marathon-management-system-server-theta.vercel.app/marathons/${params.id}`)
       },
       {
         path: '/RegistrationMarathon/:id',
         element: <RegistrationMarathon></RegistrationMarathon>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/RegistrationMarathon/${params.id}`)
+          fetch(`https://marathon-management-system-server-theta.vercel.app/RegistrationMarathon/${params.id}`)
       },
       {
         path:'/mymarathonslist',
@@ -88,7 +88,7 @@ const router = createBrowserRouter([
         path:'/updatemarathon/:id',
         element:<UpdateMarathon></UpdateMarathon>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/marathons/${params.id}`)
+          fetch(`https://marathon-management-system-server-theta.vercel.app/marathons/${params.id}`)
       },
       {
         path:'/myapply',
@@ -105,7 +105,7 @@ const router = createBrowserRouter([
         path:'/updateregistrationmarathon/:id',
         element:<UpdateRegistrationMarathon></UpdateRegistrationMarathon>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/marathonsreg/${params.id}`,{
+          fetch(`https://marathon-management-system-server-theta.vercel.app/marathonsreg/${params.id}`,{
              credentials:'include'
           })
       }

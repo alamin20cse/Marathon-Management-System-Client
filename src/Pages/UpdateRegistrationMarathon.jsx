@@ -49,7 +49,7 @@ const UpdateRegistrationMarathon = () => {
 
 
 
-     fetch(`http://localhost:5000/marathonsreg/${loadedData._id}`, {
+     fetch(`https://marathon-management-system-server-theta.vercel.app/marathonsreg/${loadedData._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

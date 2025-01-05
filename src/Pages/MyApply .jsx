@@ -13,7 +13,7 @@ const MyApply = () => {
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/marathonsreg`, {
+        const res = await fetch(`https://marathon-management-system-server-theta.vercel.app/marathonsreg`, {
           credentials: 'include',
         });
 
@@ -55,7 +55,7 @@ const MyApply = () => {
   // Handle delete functionality
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/marathonsreg/${id}`, {
+      const res = await fetch(`https://marathon-management-system-server-theta.vercel.app/marathonsreg/${id}`, {
         method: 'DELETE',
       });
 

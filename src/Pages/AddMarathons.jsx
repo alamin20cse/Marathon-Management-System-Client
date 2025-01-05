@@ -37,7 +37,7 @@ const AddMarathons = () => {
 
         console.log('Marathon Details:', marathons);
 
-        fetch('http://localhost:5000/marathons', {
+        fetch('https://marathon-management-system-server-theta.vercel.app/marathons', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -51,6 +51,9 @@ const AddMarathons = () => {
                     text: 'Successfully added the Marathon',
                     icon: 'success',
                 });
+               
+    // Reset the form
+    e.target.reset();
             });
     };
 

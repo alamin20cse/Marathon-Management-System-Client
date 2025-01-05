@@ -48,7 +48,7 @@ const RegistrationMarathon = () => {
 
 
     
-    fetch('http://localhost:5000/marathonsreg',{
+    fetch('https://marathon-management-system-server-theta.vercel.app/marathonsreg',{
       method:'POST',
       headers:{
           'content-type':'application/json'

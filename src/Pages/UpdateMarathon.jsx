@@ -47,7 +47,7 @@ const UpdateMarathon = () => {
 
     console.log('Updated Marathon Details:', updatedMarathon);
 
-    fetch(`http://localhost:5000/marathons/${loadedMarathon._id}`, {
+    fetch(`https://marathon-management-system-server-theta.vercel.app/marathons/${loadedMarathon._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -62,6 +62,9 @@ const UpdateMarathon = () => {
             text: 'Successfully updated the marathon',
             icon: 'success',
           });
+
+    // Reset the form
+    e.target.reset();
           navigate('/mymarathonslist');
         }
       })
