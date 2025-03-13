@@ -10,7 +10,7 @@ const Home = () => {
             document.title='Home';
           })
     return (
-        <div>
+        <div className='pt-16'>
             <Bannar></Bannar>
           
             <MarathonHome></MarathonHome>

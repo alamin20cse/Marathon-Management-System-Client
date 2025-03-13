@@ -77,7 +77,6 @@ const AuthProvider = ({children}) => {
         userLogin,
         handelGooglSignIn,
 
-        
 
 
     }
@@ -97,7 +96,7 @@ const AuthProvider = ({children}) => {
                     },{
                         withCredentials: true
                     });
-                    console.log(data); // Handle token or other responses
+                    // console.log(data); 
                     // localStorage.setItem("authToken", data.token); // Save token if needed
 
                     

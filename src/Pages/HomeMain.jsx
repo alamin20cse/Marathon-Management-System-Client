@@ -12,7 +12,7 @@ const HomeMain = () => {
 
 
     return (
-        <div>
+        <div className=''>
             <Navbar></Navbar>
             <Outlet></Outlet>
             <Footer></Footer>

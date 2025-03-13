@@ -47,7 +47,7 @@ const Register = () => {
     };
 
     return (
-        <div className="container mx-auto hero min-h-screen flex flex-col gap-4 lg:flex-row-reverse">
+        <div className="container mx-auto hero min-h-screen flex flex-col gap-4 lg:flex-row-reverse pt-16">
             {/* Text Section */}
             <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-200">
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta eum, dolores exercitationem repudiandae iure quod harum ipsum fugit tenetur illum quam et hic veritatis fugiat tempora omnis dolor, consequuntur inventore.</p>

@@ -1,52 +1,51 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MarathonsPageCard from './MarathonsPageCard';
 import { AuthContex } from '../Component/AuthProvider';
-import { useNavigate } from 'react-router-dom'; // Add this if you are using navigate
+import { useNavigate } from 'react-router-dom';
+import Loading from './Loading';
 
 const MarathonsPage = () => {
   const [loadedMarathons, setLoadedMarathons] = useState([]);
   const { loading, logOut } = useContext(AuthContex);
+  const [loaddata, setLoaddata] = useState(true);
   const [sort, setSort] = useState('');
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`https://marathon-management-system-server-theta.vercel.app/marathons?sort=${sort}`, {
-      credentials: 'include', // Move credentials inside fetch options
+      credentials: 'include',
     })
       .then((res) => {
         if (res.status === 401 || res.status === 403) {
           logOut();
-          navigate('/login'); // Redirect to login page if unauthorized
+          navigate('/login');
           return;
         }
-        return res.json(); // Return JSON data
+        return res.json();
       })
-      .then((data) => setLoadedMarathons(data))
-      .catch((error) => console.error('Error fetching data:', error)); // Catch any fetch errors
-  }, [sort, logOut, navigate]); // Add logOut and navigate as dependencies
+      .then((data) => {
+        setLoadedMarathons(data);
+        setLoaddata(false);
+      })
+      .catch((error) => console.error('Error fetching data:', error));
+  }, [sort, logOut, navigate]);
 
   useEffect(() => {
     document.title = 'Marathon Page';
   }, []);
 
-  if (loading) {
-    return <span className="loading loading-spinner loading-lg"></span>;
+  if (loading || loaddata) {
+    return <Loading />;
   }
 
   return (
-    <div>
-      <div>
-        <h1>All Marathons: {loadedMarathons.length}</h1>
-        <button
-          className="btn mr-2"
-          onClick={() => setSort('asc')}
-        >
+    <div className='pt-16 min-h-screen'>
+      <div className='py-4'>
+        <h1 className='py-4'>All Marathons: {loadedMarathons.length}</h1>
+        <button className="btn mr-2" onClick={() => setSort('asc')}>
           Sort Oldest Created
         </button>
-        <button
-          className="btn"
-          onClick={() => setSort('desc')}
-        >
+        <button className="btn" onClick={() => setSort('desc')}>
           Sort Newest Created
         </button>
       </div>

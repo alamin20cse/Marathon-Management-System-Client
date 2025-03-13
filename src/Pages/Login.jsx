@@ -65,7 +65,7 @@ const Login = () => {
 
 
     return (
-        <div className='hero min-h-screen flex flex-col gap-4 lg:flex-row-reverse'>
+        <div className='hero min-h-screen flex flex-col gap-4 lg:flex-row-reverse pt-16'>
     
             {/* dfsdf */}
             <div className='w-full lg:w-1/2 flex items-center justify-center bg-base-200'>

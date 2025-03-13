@@ -18,30 +18,37 @@ const Navbar = () => {
 
   const links = (
     <>
-
-    
-<NavLink to='/'> <li><a>Home</a></li></NavLink>
-<NavLink  to='/marathonspage'> <li><a>Marathons page</a></li></NavLink>
- {/* <NavLink className='btn'>Marathons Page </NavLink> */}
-
-
-
-
-{  user && user?.email? <NavLink to='/dashboard'> <li><a>Dashboard</a></li></NavLink>: ""
-
-
-
-}
-
-
-
-
-     
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          isActive ? "text-blue-600 font-bold" : "text-gray-700"
+        }
+      >
+        <li className="px-3 py-2">Home</li>
+      </NavLink>
+      <NavLink
+        to="/marathonspage"
+        className={({ isActive }) =>
+          isActive ? "text-blue-600 font-bold" : "text-gray-700"
+        }
+      >
+        <li className="px-3 py-2">Marathons Page</li>
+      </NavLink>
+      {user && user?.email && (
+        <NavLink
+          to="/dashboard"
+          className={({ isActive }) =>
+            isActive ? "text-blue-600 font-bold" : "text-gray-700"
+          }
+        >
+          <li className="px-3 py-2">Dashboard</li>
+        </NavLink>
+      )}
     </>
   );
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-blue-300  fixed  shadow-md z-10">
       {/* Navbar Start */}
       <div className="navbar-start">
         <div className="dropdown">
@@ -81,11 +88,21 @@ const Navbar = () => {
               </li>
             ) : (
               <>
-                <NavLink to="/login" className="hover:underline">
-                  <li>Login</li>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive ? "text-blue-600 font-bold" : "text-gray-700"
+                  }
+                >
+                  <li className="px-3 py-2">Login</li>
                 </NavLink>
-                <NavLink to="/register" className="hover:underline">
-                  <li>Register</li>
+                <NavLink
+                  to="/register"
+                  className={({ isActive }) =>
+                    isActive ? "text-blue-600 font-bold" : "text-gray-700"
+                  }
+                >
+                  <li className="px-3 py-2">Register</li>
                 </NavLink>
               </>
             )}
@@ -97,48 +114,45 @@ const Navbar = () => {
       </div>
 
       {/* Navbar End */}
-      <div className="navbar-end hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          {links}
-          {user && user?.email ? (
-
-            
-            <li>
-             
-
-            
-
-              
-              <button
-                onClick={handleLogOut}
-                className="btn btn-sm btn-outline ml-4"
-              >
-                Log Out
-              </button>
-              
-            </li>
-          ) : (
-            <>
-             
-<NavLink to='/login'> <li><a>Login</a></li></NavLink>
-<NavLink to='/register'> <li><a>Register</a></li></NavLink>
-            </>
-          )}
-        </ul>
+      <div className="navbar-end hidden lg:flex gap-6">
+        <ul className="menu menu-horizontal px-1 gap-4">{links}</ul>
+        {user && user?.email ? (
+          <>
+            <button
+              onClick={handleLogOut}
+              className="btn btn-sm btn-outline ml-4"
+            >
+              Log Out
+            </button>
+            {/* User Profile Picture */}
+            <img
+              referrerPolicy="no-referrer"
+              className="w-10 h-10 rounded-full border-2 border-gray-300 hover:border-blue-500"
+              src={user?.photoURL || "/default-avatar.png"}
+              alt="User Profile"
+            />
+          </>
+        ) : (
+          <>
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600 font-bold" : "text-gray-700"
+              }
+            >
+              <li className="px-3 py-2">Login</li>
+            </NavLink>
+            <NavLink
+              to="/register"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600 font-bold" : "text-gray-700"
+              }
+            >
+              <li className="px-3 py-2">Register</li>
+            </NavLink>
+          </>
+        )}
       </div>
-        {
-          user && user?.email? (<> 
-
-
-          
-           {/* User Profile Picture */}
-         <img referrerPolicy="no-referrer"
-                className="w-10 h-10 rounded-full border-2 border-gray-300 hover:border-blue-500"
-                src={user?.photoURL || '/default-avatar.png'}
-                alt="User Profile"
-              />
-          </>):(<></>)
-        }
     </div>
   );
 };

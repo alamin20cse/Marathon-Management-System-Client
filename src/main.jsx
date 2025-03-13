@@ -25,6 +25,7 @@ import MyApply from './Pages/MyApply .jsx';
 import MyApplyList from './Pages/MyApplyList.jsx';
 import UpdateRegistrationMarathon from './Pages/UpdateRegistrationMarathon.jsx';
 import PrivateRoute from './Pages/PrivateRoute.jsx';
+import DashboardHome from './Pages/DashboardHome.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,15 +52,32 @@ const router = createBrowserRouter([
         element:<Dashboard></Dashboard>,
         children:[
           {
+            path:'/dashboard',
+            element:<DashboardHome></DashboardHome>
 
-            
-          }
+          },
+          {
+            path:'/dashboard/addmarathons',
+            element:<PrivateRoute><AddMarathons></AddMarathons></PrivateRoute>,
+          },
+          {
+            path:'/dashboard/mymarathonslist',
+            element:<PrivateRoute><MyMarathonsList></MyMarathonsList></PrivateRoute>,
+          },
+          {
+            path:'/dashboard/myapply',
+            element:<PrivateRoute><MyApply></MyApply></PrivateRoute>,
+           
+          },
+           
+      {
+        path:'/dashboard/myapplylist',
+        element:<PrivateRoute><MyApplyList></MyApplyList></PrivateRoute>,
+        
+      },
         ]
       },
-      {
-        path:'/addmarathons',
-        element:<PrivateRoute><AddMarathons></AddMarathons></PrivateRoute>,
-      },
+      
       {
         path:'/marathonspage',
         element:<PrivateRoute><MarathonsPage></MarathonsPage></PrivateRoute>,
@@ -77,30 +95,15 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`https://marathon-management-system-server-theta.vercel.app/RegistrationMarathon/${params.id}`)
       },
-      {
-        path:'/mymarathonslist',
-        element:<PrivateRoute><MyMarathonsList></MyMarathonsList></PrivateRoute>,
-       
-       
-          
-      },
+     
       {
         path:'/updatemarathon/:id',
         element:<UpdateMarathon></UpdateMarathon>,
         loader: ({ params }) =>
           fetch(`https://marathon-management-system-server-theta.vercel.app/marathons/${params.id}`)
       },
-      {
-        path:'/myapply',
-        element:<PrivateRoute><MyApply></MyApply></PrivateRoute>,
-       
-      },
-      
-      {
-        path:'/myapplylist',
-        element:<PrivateRoute><MyApplyList></MyApplyList></PrivateRoute>,
-        
-      },
+     
+     
       {
         path:'/updateregistrationmarathon/:id',
         element:<UpdateRegistrationMarathon></UpdateRegistrationMarathon>,

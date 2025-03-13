@@ -10,7 +10,7 @@ const ExtraSection = () => {
 <section className="py-10 bg-gray-100">
   <div className="container mx-auto text-center">
     <h2 className="text-3xl font-bold mb-6">Success Stories</h2>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div id='success' className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {[
         {
           name: "John Doe",
@@ -51,7 +51,7 @@ const ExtraSection = () => {
 
 
 <section className="py-10 bg-white">
-  <div className="container mx-auto">
+  <div id='Fitness' className="container mx-auto">
     <h2 className="text-3xl font-bold text-center mb-6">Fitness Tips & Resources</h2>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* Quick Tips Section */}
