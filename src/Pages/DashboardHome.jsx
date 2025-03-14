@@ -6,7 +6,7 @@ const DashboardHome = () => {
     console.log(user);
     return (
         <div>
-            <div className='w-[400px] h-[400px]  mx-auto'>
+            <div className='lg:w-[400px] lg:h-[400px]  w-[300px] h-[300px]   mx-auto'>
                 <img className='w-full h-full rounded-full'  src={user?.photoURL || "/default-avatar.png"} alt="User Photo"  />
 
             </div>

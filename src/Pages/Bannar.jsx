@@ -11,7 +11,7 @@ const Bannar = () => {
 
   <div id="slide1" className="carousel-item relative w-full">
   <div
-  className="hero min-h-screen"
+  className="hero lg:min-h-screen h-[400px]"
   style={{
     backgroundImage: `url(${photo1})`,
   }}>
@@ -39,7 +39,7 @@ const Bannar = () => {
 {/* 2 */}
   <div id="slide2" className="carousel-item relative w-full">
   <div
-  className="hero min-h-screen"
+  className="hero lg:min-h-screen h-[400px]"
   style={{
     backgroundImage: `url(${photo2})`,
   }}>
@@ -66,7 +66,7 @@ const Bannar = () => {
 {/* 3 */}
   <div id="slide3" className="carousel-item relative w-full">
   <div
-  className="hero min-h-screen"
+  className="hero lg:min-h-screen h-[400px]"
   style={{
     backgroundImage: `url(${photo3})`,
   }}>
@@ -93,7 +93,7 @@ const Bannar = () => {
 {/* 4 */}
   <div id="slide4" className="carousel-item relative w-full">
   <div
-  className="hero min-h-screen"
+  className="hero lg:min-h-screen h-[400px]"
   style={{
     backgroundImage: `url(${photo4})`,
   }}>
